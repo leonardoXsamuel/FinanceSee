@@ -1,0 +1,6 @@
+@PjtFinanceSee_HostAddress = http://localhost:5280
+
+GET {{PjtFinanceSee_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
