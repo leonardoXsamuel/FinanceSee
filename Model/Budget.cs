@@ -1,49 +1,25 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
 
 namespace PjtFinanceSee.Model;
 
 public class Budget
 {
-
     public long Id { get; set; }
 
-    [StringLength(30, ErrorMessage = "o nome do orçamento não deve passar de 30 caracteres.")]
+    [StringLength(30, ErrorMessage = "o NOME DO ORÇAMENTO não deve passar de 30 caracteres.")]
     public string Name { get; set; }
 
-    private int _month;
-    public int Month
-    {
-        get => _month;
-        set
-        {
-            if (value > 12 || value < 0)
-                throw new Exception("o atributo MÊS deve estar entre 1-12.");
+    [Range(1, 12, ErrorMessage = "o MÊS deve estar entre 1-12.")]
+    public int Month { get; set; }
 
-            _month = value;
-        }
-    }
-
-    [Range(1900, 2700, ErrorMessage = "informe um ano válido.")]
+    [Range(1900, 2700, ErrorMessage = "informe um ANO válido. Ex: 2026.")]
     public int Year { get; set; }
 
-    private decimal _salary;
-    public decimal Salary
-    {
-        get => _salary; 
-        set
-        {
-            if (value < 0)
-                throw new Exception("o atributo SALARIO não pode ser negativo.");
-
-            _salary = value;
-        }
-    }
-
-    // adicionar annot de FK
+    [ForeignKey("User")]
     public long UserId { get; set; }
 
+    [Required(ErrorMessage = "O ORÇAMENTO deve, obrigatoriamente, estar associado à um usuário.")]
     public User User { get; set; }
-
-
 }
